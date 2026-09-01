@@ -1,13 +1,43 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="pokemon-name">{{ pokemon()?.name }}</ion-title>
+    <ion-buttons slot="end" *ngIf="pokemon() as p">
+      <ion-button (click)="toggleFavorite()">
+        <ion-icon
+          [name]="favoritesService.isFavorite(p.id) ? 'heart' : 'heart-outline'"
+          slot="icon-only"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div *ngIf="isLoading()" class="spinner-wrapper">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div *ngIf="pokemon() as p">
+    <img [src]="p.sprites.other['official-artwork'].front_default" [alt]="p.name" class="pokemon-image" />
+
+    <ion-list>
+      <ion-item><ion-label>ID</ion-label><ion-note slot="end">#{{ p.id }}</ion-note></ion-item>
+      <ion-item><ion-label>Altura</ion-label><ion-note slot="end">{{ p.height / 10 }} m</ion-note></ion-item>
+      <ion-item><ion-label>Peso</ion-label><ion-note slot="end">{{ p.weight / 10 }} kg</ion-note></ion-item>
+      <ion-item><ion-label>Experiência Base</ion-label><ion-note slot="end">{{ p.base_experience }}</ion-note></ion-item>
+      <ion-item><ion-label>Tipos</ion-label><ion-note slot="end">{{ p.types.map(t => t.type.name).join(', ') }}</ion-note></ion-item>
+      <ion-item><ion-label>Habilidades</ion-label><ion-note slot="end">{{ p.abilities.map(a => a.ability.name).join(', ') }}</ion-note></ion-item>
+    </ion-list>
+
+    <h3>Status Base</h3>
+    <ion-list>
+      <ion-item *ngFor="let stat of p.stats">
+        <ion-label>{{ stat.stat.name }}</ion-label>
+        <ion-note slot="end">{{ stat.base_stat }}</ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>

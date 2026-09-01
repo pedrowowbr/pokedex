@@ -2,17 +2,17 @@
     text-transform: capitalize;
 }
 
-.pokemon-image {
-    display: block;
-    margin: 0 auto 16px;
-    width: 200px;
-    height: 200px;
+.thumb {
+    width: 48px;
+    height: 48px;
     object-fit: contain;
 }
 
-.spinner-wrapper {
+.spinner-wrapper,
+.empty-state {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 60vh;
+    text-align: center;
 }
