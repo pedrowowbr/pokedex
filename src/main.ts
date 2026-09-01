@@ -5,6 +5,9 @@ import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { registerAppIcons } from './app/core/icons';
+
+registerAppIcons();
 
 bootstrapApplication(AppComponent, {
   providers: [
